@@ -1,0 +1,5 @@
+.env
+mailer/node_modules/
+mailer/.bash_history
+mailer/.viminfo
+mailer/redesagi_facturacion_bk.sql
