@@ -1,0 +1,2 @@
+SImple node JS Express server running an API Rest to listen POST request and send the information to target emails using the free Sengrid mail service. 
+
