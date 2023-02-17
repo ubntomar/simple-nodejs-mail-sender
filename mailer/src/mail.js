@@ -1,7 +1,7 @@
   async function sendEmail(data = "") {
-      var response = "xxx"
+      var response = "xxx"//<=dont pass Typescript! it must be boolean
       const sgMail = require('@sendgrid/mail')
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY) //first paste export....... in ~/.profile, run: . ~/.profile , check: printenv 
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY) //if you dont use docker-compose .env then  first paste export....... in ~/.profile, run: . ~/.profile , check: printenv 
       console.log("la api ke" + process.env.SENDGRID_API_KEY)
       const msg = {
           to: data.email,
@@ -32,7 +32,7 @@
   async function sendEmailPayment(data = "") {
     var response = "xxx"
     const sgMail = require('@sendgrid/mail')
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY) //first paste export....... in ~/.profile, run: . ~/.profile , check: printenv 
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY) 
     console.log("la api ke" + process.env.SENDGRID_API_KEY)
       const msg = {
           to: data.email,
@@ -59,7 +59,7 @@
   async function sendEmailToCompany(data = "") {
     var response = "xxx"
     const sgMail = require('@sendgrid/mail')
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY) //first paste export....... in ~/.profile, run: . ~/.profile , check: printenv 
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY) 
     console.log("la api ke" + process.env.SENDGRID_API_KEY)
       const msg = {
           to: data.email,

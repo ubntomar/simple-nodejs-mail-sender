@@ -1,0 +1,53 @@
+version: '3.3'
+services:
+    mail-api:
+        container_name: node-mail
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./mail-mikroservice/mailer:/root
+        env_file:
+            - ./mail-mikroservice/.env
+        ports:
+          - 3001:3001
+        tty: true 
+    php-apache-isp-experts:
+        container_name: php-apache
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - ./ispweb:/var/www/ispexperts
+            - ./var/www/ispexperts/vendor
+        env_file:
+            - ./.env
+        ports:
+            - 8050:80
+    db:
+        container_name: db
+        image: mysql:8.0
+        restart: always
+        ports:
+          - "3306:3306"
+        volumes:
+          - ./db-data:/var/lib/mysql
+          - ./mysql-dump/redesagi.sql.gz:/docker-entrypoint-initdb.d/redesagi.sql.gz   
+        env_file: 
+          - ./.env
+    phpmyadmin:
+     image: phpmyadmin/phpmyadmin
+     container_name: pma
+     links:
+       - db
+     environment:
+       PMA_HOST: db
+       PMA_PORT: 3306
+       PMA_ARBITRARY: 1
+     restart: always
+     ports:
+      - 8051:80    
+volumes:
+  db-data:  
