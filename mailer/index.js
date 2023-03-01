@@ -77,8 +77,14 @@ app.get('/bk', async (req, res) => {
   }
 });
 app.get('/invoices', async (req, res) => {
+  console.log("invoicess GEtt")
+  let email = req.query.email;
   let userId = req.query.userId;
-  let resultado=await sendMonthlyEmailToCompany(userId)
+  let name = req.query.name;
+  let invoiceId = req.query.invoiceId;
+  let formattedToday = req.query.formattedToday;
+  const formatedFilename=userId+'invoice'+invoiceId+'_'+name.replace(/\s/g,'')+'_'+formattedToday+'.pdf';
+  let resultado=await sendMonthlyEmailToCompany(formatedFilename,email,userId)
   if (resultado == true) {
     let message=`success ${new Date}`
     res.status(200).send({
@@ -91,7 +97,7 @@ app.get('/invoices', async (req, res) => {
   }
 });
 
-app.listen(3009, () => {
+app.listen(3001, () => {
   console.log('listening on port 3001');
 });
 

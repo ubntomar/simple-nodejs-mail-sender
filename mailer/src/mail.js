@@ -123,18 +123,20 @@ async function backup() {
     return response
 
 }
-async function sendMonthlyEmailToCompany(formatedFilename,email) {
-    console.log("sending email..pdf!.")
+async function sendMonthlyEmailToCompany(formatedFilename,email,userId) {
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    console.log("la api ke" + process.env.SENDGRID_API_KEY)
     const fs = require("fs");
-    if(await toPdf(formatedFilename)){
-        // pathToAttachment = "/tmp/db_redesagi.tar.gz";
+    console.log("...calling to pdf...")
+    let converted=await toPdf(formatedFilename,userId);
+    console.log("..end calling to pdf ..q pasa aca por q q no lo veo!!!!")
+    if(converted){
+        console.log("pdf to email!.:"+email)
+        // pathToAttachment = "/tmp/db_redesagi.tar.gz"; 
         // attachment = fs.readFileSync(pathToAttachment).toString("base64");
         // const msg = {
         //     to: 'omar.a.hernandez.d@gmail.com',
-        //     from: 'ventas@agingenieria.tech',
+        //     from: 'ventas@agingenieria.tech', 
         //     subject: 'Backup base de datos Ispexperts.com',
         //     html: '<strong>Adjunto  backup diario!</strong>',
         //     attachments: [{
@@ -156,8 +158,10 @@ async function sendMonthlyEmailToCompany(formatedFilename,email) {
         // console.log("ya terminé la promesa y devolvió el valor:" + response)
         // return response
 
+    }else{
+        console.log("no se ha podido crear el pdf!!")
+        return false
     }
-    return false
 
 }
 
