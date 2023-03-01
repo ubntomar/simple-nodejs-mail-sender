@@ -123,37 +123,41 @@ async function backup() {
     return response
 
 }
-async function sendMonthlyEmailToCompany(userId) {
-    console.log("sending email...")
+async function sendMonthlyEmailToCompany(formatedFilename,email) {
+    console.log("sending email..pdf!.")
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     console.log("la api ke" + process.env.SENDGRID_API_KEY)
     const fs = require("fs");
-    pathToAttachment = "/tmp/db_redesagi.tar.gz";
-    attachment = fs.readFileSync(pathToAttachment).toString("base64");
-    const msg = {
-        to: 'omar.a.hernandez.d@gmail.com',
-        from: 'ventas@agingenieria.tech',
-        subject: 'Backup base de datos Ispexperts.com',
-        html: '<strong>Adjunto  backup diario!</strong>',
-        attachments: [{
-            content: attachment,
-            filename: "db_redesagi.tar.gz",
-            type: "application/tar.gz",
-            disposition: "attachment"
-        }]
+    if(await toPdf(formatedFilename)){
+        // pathToAttachment = "/tmp/db_redesagi.tar.gz";
+        // attachment = fs.readFileSync(pathToAttachment).toString("base64");
+        // const msg = {
+        //     to: 'omar.a.hernandez.d@gmail.com',
+        //     from: 'ventas@agingenieria.tech',
+        //     subject: 'Backup base de datos Ispexperts.com',
+        //     html: '<strong>Adjunto  backup diario!</strong>',
+        //     attachments: [{
+        //         content: attachment,
+        //         filename: "db_redesagi.tar.gz",
+        //         type: "application/tar.gz",
+        //         disposition: "attachment"
+        //     }]
+        // }
+        // console.log("Voy a empezar la promesa")
+        // await sgMail
+        //     .send(msg)
+        //     .then((res) => {
+        //         response = true
+        //     })
+        //     .catch((error) => {
+        //         response = false
+        //     })
+        // console.log("ya terminé la promesa y devolvió el valor:" + response)
+        // return response
+
     }
-    console.log("Voy a empezar la promesa")
-    await sgMail
-        .send(msg)
-        .then((res) => {
-            response = true
-        })
-        .catch((error) => {
-            response = false
-        })
-    console.log("ya terminé la promesa y devolvió el valor:" + response)
-    return response
+    return false
 
 }
 
